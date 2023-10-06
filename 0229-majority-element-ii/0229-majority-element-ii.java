@@ -1,68 +1,46 @@
 public class Solution {
     public List<Integer> majorityElement(int[] nums) {
-        // int n = nums.length;
-        
-        // Integer maj1 = null;
-        // int count1 = 0;
-
-        // Integer maj2 = null;
-        // int count2 = 0;
-        
-        // for (int num : nums) {
-        //     if (maj1 != null && num == maj1) {
-        //         count1++;
-        //     } else if (maj2 != null && num == maj2) {
-        //         count2++;
-        //     } else if (count1 == 0) {
-        //         maj1 = num;
-        //         count1 = 1;
-        //     } else if (count2 == 0) {
-        //         maj2 = num;
-        //         count2 = 1;
-        //     } else {
-        //         count1--;
-        //         count2--;
-        //     }
-        // }
-        
-        // count1 = 0;
-        // count2 = 0;
-        // for (int num : nums) {
-        //     if (maj1 != null && num == maj1) {
-        //         count1++;
-        //     } else if (maj2 != null && num == maj2) {
-        //         count2++;
-        //     }
-        // }
-        
-        // List<Integer> result = new ArrayList<>();
-        // if (count1 > Math.floor(n / 3)) {
-        //     result.add(maj1);
-        // }
-        // if (count2 > Math.floor(n / 3)) {
-        //     result.add(maj2);
-        // }
-        
-        // return result;
-
-
-        Arrays.sort(nums);
-        List<Integer>lst=new ArrayList<>();
-        // [1 1 1 2 2 2 2]
-        int i=0,j=0;
-        int count=0;
+        int cnt1=0;
+        int cnt2=0;
+        Integer maj1=null;
+        Integer maj2=null;
         int n=nums.length;
-        while(i<n){
-            while(j<n && nums[j]==nums[i]){
-                count++;
-                j++;
+        for(int num:nums){
+            if(maj1!=null && maj1==num){
+                cnt1++;
             }
-            if(count>n/3)
-                lst.add(nums[i]);
-            
-            count=0;
-            i++;
+            else if(maj2!=null && maj2==num){
+                cnt2++;
+            }
+            else if(cnt1==0){
+                maj1=num;
+                cnt1=1;
+            }
+            else if(cnt2==0){
+                maj2=num;
+                cnt2=1;
+            }
+            else{
+                cnt1--;
+                cnt2--;
+            }
         }
-        return lst;
+        cnt1=0;
+        cnt2=0;
+        for(int num:nums){
+            if(num==maj1)
+                cnt1++;
+            else if(maj2==num)
+                cnt2++;
+        }
+        List<Integer>ans=new ArrayList<>();
+        if(cnt1>Math.floor(n/3)){
+            ans.add(maj1);
+        }
+        if(cnt2>Math.floor(n/3)){
+            ans.add(maj2);
+        }
+        return ans;
+
     }
 }
