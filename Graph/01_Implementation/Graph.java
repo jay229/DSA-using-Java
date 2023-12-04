@@ -8,7 +8,7 @@ public class Graph {
     ArrayList<Integer>[] adj;
 
     // constructor
-    Graph(int v) {
+   @SuppressWarnings("unchecked") Graph(int v) {
         this.V = v;
         adj = new ArrayList[V];
 
@@ -48,6 +48,24 @@ public class Graph {
         }
     }
 
+    // DFS traversal
+    public void dfs(int v){
+        boolean visited[]=new boolean[V];
+        dfsUtil(v,visited);
+    }
+    public void dfsUtil(int v, boolean visited[]){
+        visited[v]=true;
+        System.out.print(v+" ");
+
+        Iterator<Integer> itr=adj[v].listIterator();
+        while (itr.hasNext()) {
+            int n=itr.next();
+            if (!visited[n]) {
+                dfsUtil(n,visited);
+            }
+        }
+    }
+
     // Main method
     public static void main(String argv[]) {
         // Graph graph=new Graph(3);
@@ -56,6 +74,7 @@ public class Graph {
         // graph.addEdge(1, 2);
 
         // graph.bfs(0);
+        // graph.dfs(0);
 
         Graph graph = new Graph(4);
         graph.addEdge(0, 1);
@@ -63,7 +82,8 @@ public class Graph {
         graph.addEdge(1, 2);
         graph.addEdge(2, 3);
 
-        graph.bfs(0);
+        // graph.bfs(0);
+        graph.dfs(0);
     }
 
 }
