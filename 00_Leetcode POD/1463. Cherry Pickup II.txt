@@ -1,0 +1,43 @@
+class Solution {
+    int m;
+    int n;
+    int dp[][][];
+
+    public int solve(int[][] grid, int r1, int c1, int c2) {
+        if (r1 >= m)
+            return 0;
+
+        if (dp[r1][c1][c2] != -1) {
+            return dp[r1][c1][c2];
+        }
+        int cherry = grid[r1][c1];
+
+        if (c1 != c2) {
+            cherry += grid[r1][c2]; // When both robots stay in the same cell, only one takes the cherries.
+        }
+
+        int ans = 0;
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int new_c1 = i + c1;
+                int new_c2 = j + c2;
+
+                if (new_c1 >= 0 && new_c1 < n && new_c2 >= 0 && new_c2 < n)
+                    ans = Math.max(ans, solve(grid, r1 + 1, new_c1, new_c2));
+            }
+        }
+        return dp[r1][c1][c2] = cherry + ans;
+    }
+
+    public int cherryPickup(int[][] grid) {
+        m = grid.length;
+        n = grid[0].length;
+        dp = new int[71][71][71];
+        for (int arr1[][] : dp) {
+            for (int arr2[] : arr1) {
+                Arrays.fill(arr2, -1);
+            }
+        }
+        return solve(grid, 0, 0, n - 1);
+    }
+}
